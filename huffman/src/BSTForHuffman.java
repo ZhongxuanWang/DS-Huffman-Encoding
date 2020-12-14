@@ -1,28 +1,26 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BST {
+public class BSTForHuffman {
 
     Node root;
     int size;
 
-    public BST() {
+    public BSTForHuffman() {
         this.size = 0;
     }
 
-    public void add(Object itemToAdd) {
-        int intToAdd = calcInteger(itemToAdd);
-        if (root == null) {
-            root = new Node(itemToAdd);
-            size ++;
-            return;
-        }
-        add(root, intToAdd);
-        size ++;
+    public void addBase(WordPair pair1, WordPair pair2) {
+
     }
 
-    public int calcInteger(Object obj) {
-        return obj == null ? -1 : obj.hashCode();
+    public void add(WordPair pair) {
+        if (root == null) {
+            System.out.println("WARNING! You should invoke addBase method first.");
+            return;
+        }
+        add(root, pair);
+        size ++;
     }
 
     /** Lesson learnt:
@@ -31,7 +29,7 @@ public class BST {
      *
      * Instead, setting it in-place would eliminate this kind of mistakes.
      */
-    private void add(Node node, int itemToAdd) {
+    private void add(Node node, WordPair itemToAdd) {
         if (node.getData() == itemToAdd)
             return;
         if (itemToAdd < node.getData()) {
@@ -108,7 +106,7 @@ public class BST {
             remove(successor);
             int oldData = node.data;
             node.data = data;
-            return new Node(oldData);
+            // return new Node(oldData);
         }
         return node;
     }
@@ -134,23 +132,6 @@ public class BST {
         return node;
     }
 
-    public void preOrderTraversal() {
-        if (root == null) return;
-        preOrderTraversal(root);
-    }
-
-    private void preOrderTraversal(Node node) {
-        printNode(node);
-        if (node.getLeft() != null)
-            preOrderTraversal(node.getLeft());
-        if (node.getRight() != null)
-            preOrderTraversal(node.getRight());
-    }
-
-    public Object find(Object objectToFind) {
-        return root == null ? null : find(root, calcInteger(objectToFind));
-    }
-
     private Object find(Node node, int intToFind) {
         if (node == null) {
             return null;
@@ -161,36 +142,6 @@ public class BST {
             return node;
         }
         return find(intToFind < data ? node.getLeft() : node.getRight(), intToFind);
-    }
-
-    public void inOrderTraversal() {
-        if (root == null) return;
-        inOrderTraversal(root);
-    }
-
-    public void inOrderTraversal(Node node) {
-        if (node.getLeft() != null)
-            inOrderTraversal(node.getLeft());
-
-        printNode(node);
-
-        if (node.getRight() != null)
-            inOrderTraversal(node.getRight());
-    }
-
-    public void postOrderTraversal() {
-        if (root == null) return;
-        postOrderTraversal(root);
-    }
-
-    private void postOrderTraversal(Node node) {
-        if (node.getLeft() != null)
-            postOrderTraversal(node.getLeft());
-
-        if (node.getRight() != null)
-            postOrderTraversal(node.getRight());
-
-        printNode(node);
     }
 
     public void breadthFirstSearch() {
@@ -211,6 +162,10 @@ public class BST {
         }
     }
 
+    public void mergeTwoTrees(Node r1, Node r2) {
+
+    }
+
     public void clear() {
         this.root = null;
         size = 0;
@@ -222,68 +177,51 @@ public class BST {
 
     private void printNode(Node node) {
         if (node != null) {
-            System.out.print(node.getData() + "\t");
+            System.out.print(node.data + "\t");
         }
     }
 
-    public void display() {
-        preOrderTraversal();
-    }
+    static class Node {
+        int sum = 0;
+        Node left, right;
+        WordPair data;
 
-    public class Node {
-        Node left;
-        Node right;
-        Integer data;
-
-        public Node() {
-            this.left = null;
-            this.right = null;
-            this.data = 0;
+        Node (int sum) {
+            this.sum = sum;
+            left = null;
+            right = null;
         }
-
-        public Node(Object data) {
-            this.data = data.hashCode();
-            this.left = null;
-            this.right = null;
-        }
-
-        public Node(Object data, Node left, Node right) {
-            this.data = data.hashCode();
+        Node (Node left, Node right) {
+            this.sum = left.sum + right.sum;
             this.left = left;
             this.right = right;
+            this.data = null;
         }
 
-        public Node getLeft() {
-            return left;
+        Node(WordPair data) {
+            this.data = data;
+            this.sum = data.r;
+            this.left = null;
+            this.right = null;
         }
 
-        public void setLeft(Node left) {
-            this.left = left;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public void setRight(Node right) {
-            this.right = right;
-        }
-
-        public Integer getData() {
-            return data;
-        }
-
-        public void setData(Object data) {
-            this.data = data.hashCode();
-        }
-
-        public boolean isBald() {
-            return left == null && right == null;
+        boolean isWordNode() {
+            return data != null && left == null && right == null;
         }
 
         @Override
         public String toString() {
-            return "Node: " + data;
+            String nodeType;
+            if (isWordNode()) {
+                nodeType = "WordNode{";
+            } else {
+                nodeType = "SumNode{";
+            }
+            return nodeType +
+                    "data=" + data +
+                    ",hasLeft=" + (left!=null) +
+                    ",hasRight=" + (right!=null) +
+                    '}';
         }
     }
 }
