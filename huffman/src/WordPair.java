@@ -16,7 +16,7 @@ public class WordPair implements Comparable<WordPair> {
 
     @Override
     public int compareTo(WordPair o) {
-        return -Integer.compare(r, o.r);
+        return Integer.compare(r, o.r);
     }
 
     @Override

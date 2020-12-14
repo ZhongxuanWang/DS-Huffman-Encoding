@@ -36,6 +36,10 @@ public class Huffman {
         }
 
         System.out.println(queue);
+
+
+
+
         return text;
     }
 
