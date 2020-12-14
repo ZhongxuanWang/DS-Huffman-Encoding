@@ -31,4 +31,12 @@ public class WordPair implements Comparable<WordPair> {
     public int hashCode() {
         return Objects.hash(c, r);
     }
+
+    @Override
+    public String toString() {
+        return "WordPair{" +
+                "c=" + c +
+                ", r=" + r +
+                '}';
+    }
 }

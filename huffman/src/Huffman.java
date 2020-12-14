@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Queue;
+
 public class Huffman {
     public String text;
 
@@ -15,10 +20,22 @@ public class Huffman {
 
 
     public static String encode(String text) {
+        HashMap<Character, Integer> map = new HashMap<>();
+
         PriorityQueue queue = new PriorityQueue();
         for (char c : text.toCharArray()) {
-            WordPair pair = new WordPair(c, 1);
+            Integer r;
+            if( (r = map.get(c)) != null) {
+                map.put(c, ++r);
+            } else {
+                map.put(c, 1);
+            }
         }
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            queue.add(new WordPair(entry.getKey(), entry.getValue()));
+        }
+
+        System.out.println(queue);
         return text;
     }
 
@@ -42,16 +59,16 @@ public class Huffman {
     static class PriorityQueue extends java.util.PriorityQueue<WordPair> {
         @Override
         public boolean add(WordPair pair) {
-            // Java lambda + final array to exchange result
-            final boolean[] updated = new boolean[1];
-            forEach((nodePair -> {
-                if (nodePair.cEquals(pair)) {
-                    nodePair.r = Math.max(pair.r, nodePair.r) + 1;
-                    updated[0] = true;
-                }
-            }));
-
-            if (!updated[0])
+            // // Java lambda + final array to exchange result
+            // final boolean[] updated = new boolean[1];
+            // forEach((nodePair -> {
+            //     if (nodePair.cEquals(pair)) {
+            //         nodePair.r = Math.max(pair.r, nodePair.r) + 1;
+            //         updated[0] = true;
+            //     }
+            // }));
+            //
+            // if (!updated[0])
                 super.add(pair);
             return true;
         }
