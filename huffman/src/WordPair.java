@@ -1,11 +1,18 @@
 import java.util.Objects;
 
-public class WordPair implements Comparable<WordPair> {
+public class WordPair extends Node implements Comparable<Node>{
 
     public char c;
     public int r;
 
+    public WordPair(char c, int r, Node left, Node right) {
+        super(left, right);
+        this.c = c;
+        this.r = r;
+    }
+
     public WordPair(char c, int r) {
+        super(null, null);
         this.c = c;
         this.r = r;
     }
@@ -15,8 +22,12 @@ public class WordPair implements Comparable<WordPair> {
     }
 
     @Override
-    public int compareTo(WordPair o) {
-        return Integer.compare(r, o.r);
+    public int compareTo(Node o) {
+        if (o instanceof WordPair) {
+            return Integer.compare(r, ((WordPair) o).r);
+        } else { // NumNode
+            return Integer.compare(r, ((NumNode) o).num);
+        }
     }
 
     @Override
@@ -34,9 +45,6 @@ public class WordPair implements Comparable<WordPair> {
 
     @Override
     public String toString() {
-        return "WordPair{" +
-                "c=" + c +
-                ", r=" + r +
-                '}';
+        return c + ":" + r;
     }
 }
