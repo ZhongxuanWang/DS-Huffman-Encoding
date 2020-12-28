@@ -5,10 +5,11 @@ public class Main {
         /*
          It's up to you whether to approach in a static / instance way! The class has all of them correctly implemented!
          */
-        Huffman.encode("hfpqewruuqpiwoeruqeasfhqqwepwoprqwpoeqwpqweporipqwoeirppoio");
+        // Huffman.encode("hfpqewruuqpiwoeruqeasfhqqwepwoprqwpoeqwpqweporipqwoeirppoiohfpqewruuqpiwoeruqeasfhqqwepwoprqwpoeqwpqweporipqwoeirppoio");
+        String encoding = Huffman.encode("qwtuyqweryewqtopqperioiytutyuytiuiyuqweoiroqppqowpeqruyqweouriuoqweituyutryrtyuywrterutuy");
         // System.out.println();
 
-        System.out.println(Huffman.decode("adfadsf"));
+        System.out.println(Huffman.decode(encoding));
     }
 
 }
